@@ -21,7 +21,6 @@ import com.models.DBConnection;
 import com.models.UserModel;
 
 @Path("/")
-
 public class Services {
 
 	/*
@@ -32,7 +31,7 @@ public class Services {
 	 * @Produces(MediaType.TEXT_HTML) public Response signUp(){ return
 	 * Response.ok(new Viewable("/Signup.jsp")).build(); }
 	 */
-	
+
 	@POST
 	@Path("/signup")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -75,20 +74,7 @@ public class Services {
 		json.put("status", status ? 1 : 0);
 		return json.toJSONString();
 	}
-	
-	@POST
-	@Path("/follow")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String follow(@FormParam("followid") int followid,@FormParam("userid") int userId) {
-		UserModel user = UserModel.addFollowing(followid, userId);
-		JSONObject json = new JSONObject();
-		json.put("followingid", user.getfollowid());
-		json.put("userid", user.getuserId());
-		
-		return json.toJSONString();
-	}
-	
-	
+
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)

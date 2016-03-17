@@ -16,6 +16,8 @@ public class UserModel {
 	private Integer id;
 	private Double lat;
 	private Double lon;
+	private int followid;
+	private int userId;
 	
 	public String getPass(){
 		return pass;
@@ -44,11 +46,28 @@ public class UserModel {
 	public Integer getId() {
 		return id;
 	}
+	
+	public Integer getfollowid() {
+		return followid;
+	}
+	
+	
+	public void setfollowid(int followid) {
+		this.followid =followid;
+	}
+
+	public int getuserId() {
+		return userId;
+	}
+
+	public void setuserId(int userId) {
+		this.userId =userId;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Double getLat() {
 		return lat;
 	}
@@ -97,6 +116,33 @@ public class UserModel {
 	}
 
 	
+	
+	public static UserModel addFollowing(int followid, int userId) {
+		try {
+			Connection conn = DBConnection.getActiveConnection();
+			String sql = "Insert into follow (`followingid`,`userid`) VALUES  (?,?)";
+			 System.out.println(sql);
+
+			PreparedStatement stmt;
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, followid);
+			stmt.setInt(2, userId);
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+		//	if (rs.next()) {
+				UserModel user = new UserModel();
+				user.userId = userId;
+				user.followid = followid;
+				return user;
+			//}
+			//return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	
 	public static UserModel login(String email, String pass) {
 		try {
