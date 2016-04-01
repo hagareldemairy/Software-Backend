@@ -17,8 +17,8 @@ public class DBConnection {
 			//		.getConnection("jdbc:mysql://127.8.100.2:3306/se2firstapp?"
 			//				+ "user=adminYKFs38v&password=QG9RmdNVFgmc&characterEncoding=utf8");
 			connection = DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/se2firstapp?"
-							+ "user=root&password=root&characterEncoding=utf8");
+					.getConnection("jdbc:mysql://localhost:3306/seproject?&characterEncoding=utf8", "root", "");//("jdbc:mysql://localhost:3306/seproject?"
+							//+ "user=root&password=null&characterEncoding=utf8");
 			return connection;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -27,4 +27,8 @@ public class DBConnection {
 		}
 		return null;
 	}
+	
+	/*public static void main(String[] args) {
+		getActiveConnection();
+	}*/
 }

@@ -21,6 +21,7 @@ import com.models.DBConnection;
 import com.models.UserModel;
 
 @Path("/")
+
 public class Services {
 
 	/*
@@ -31,7 +32,7 @@ public class Services {
 	 * @Produces(MediaType.TEXT_HTML) public Response signUp(){ return
 	 * Response.ok(new Viewable("/Signup.jsp")).build(); }
 	 */
-
+	
 	@POST
 	@Path("/signup")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -74,7 +75,62 @@ public class Services {
 		json.put("status", status ? 1 : 0);
 		return json.toJSONString();
 	}
+	
+	@POST
+	@Path("/follow")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String follow(@FormParam("followid") int followid,@FormParam("userid") int userId) {
+		UserModel user = UserModel.addFollowing(followid, userId);
+		JSONObject json = new JSONObject();
+		json.put("followingid", user.getfollowid());
+		json.put("userid", user.getuserId());
+		
+		return json.toJSONString();
+	}
+	
+	
+	@POST
+	@Path("/unfollow")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String unfollow(@FormParam("followid") int followid,@FormParam("userid") int userId) {
+		UserModel user = UserModel.deleteFollowing(followid, userId);
+		JSONObject json = new JSONObject();
+		json.put("followingid", user.getfollowid());
+		json.put("userid", user.getuserId());
+		
+		return json.toJSONString();
+	}
+	
+	@POST
+	@Path("/getfollow")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getfollow(@FormParam("userid") int userId) {
+		UserModel user = UserModel.getfollow(userId);
+		JSONObject json = new JSONObject();
+		json.put("id", user.getuserId());
+		json.put("followingid", user.getfollowid());
+		//json.put("lat", user.getLat());
+		//json.put("long", user.getLon());
+		return json.toJSONString();
+	}
 
+	
+	@POST
+	@Path("/getposition")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String Position(@FormParam("id") int userId) {
+		UserModel user = UserModel.Position(userId);
+		JSONObject json = new JSONObject();
+		json.put("id", user.getuserId());
+		//json.put("followingid", user.getfollowid());
+		json.put("lat", user.getLat());
+		json.put("long", user.getLon());
+		return json.toJSONString();
+	}
+	
+	
+	
+	
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)
