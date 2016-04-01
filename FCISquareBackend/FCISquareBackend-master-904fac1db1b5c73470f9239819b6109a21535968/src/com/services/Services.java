@@ -22,6 +22,7 @@ import com.models.UserModel;
 
 @Path("/")
 public class Services {
+
 	/*
 	 * @GET
 	 * 
