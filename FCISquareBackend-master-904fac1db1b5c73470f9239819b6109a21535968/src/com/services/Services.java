@@ -129,6 +129,20 @@ public class Services {
 	}
 	
 	
+	@POST
+	@Path("/saveplace")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addPlace(@FormParam("placeid") int placeId,@FormParam("userid") int userId) {
+		UserModel user = UserModel.addPlace(placeId, userId);
+		JSONObject json = new JSONObject();
+		json.put("placeid", user.getplaceId());
+		json.put("userid", user.getuserId());
+		
+		return json.toJSONString();
+	}
+	
+	
+	
 	
 	
 	@GET

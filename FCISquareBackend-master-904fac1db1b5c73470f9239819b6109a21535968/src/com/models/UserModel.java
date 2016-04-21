@@ -18,6 +18,7 @@ public class UserModel {
 	private Double lon;
 	private int followid;
 	private int userId;
+	private int placeId;
 	
 	public String getPass(){
 		return pass;
@@ -61,6 +62,14 @@ public class UserModel {
 	}
 
 	public void setuserId(int userId) {
+		this.userId =userId;
+	}
+	
+	public int getplaceId() {
+		return userId;
+	}
+
+	public void setplaceId(int userId) {
 		this.userId =userId;
 	}
 
@@ -267,4 +276,34 @@ public static UserModel Position(Integer id) {
 		e.printStackTrace();
 	}
 	return null;
-}}
+}
+
+
+
+public static UserModel addPlace(int placeId, int userId) {
+	try {
+		Connection conn = DBConnection.getActiveConnection();
+		String sql = "Insert into savedplaces (`placeid`,`userid`) VALUES  (?,?)";
+		 System.out.println(sql);
+
+		PreparedStatement stmt;
+		stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		stmt.setInt(1, placeId);
+		stmt.setInt(2, userId);
+		stmt.executeUpdate();
+		ResultSet rs = stmt.getGeneratedKeys();
+	//	if (rs.next()) {
+			UserModel user = new UserModel();
+			user.userId = userId;
+			user.placeId = placeId;
+			return user;
+		//}
+		//return null;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+
+}
